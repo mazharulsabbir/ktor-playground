@@ -9,9 +9,16 @@ import io.ktor.serialization.*
 import com.mazharulsabbir.routes.*
 import io.ktor.gson.*
 import io.ktor.http.*
+import io.ktor.websocket.*
+import org.slf4j.event.Level
 
 fun main() {
     embeddedServer(Netty, port = 8080, host = "0.0.0.0") {
+        install(DefaultHeaders)
+        install(CallLogging) {
+            level = Level.INFO
+        }
+        install(WebSockets)
         configureRouting()
         configureSecurity()
         configureHTTP()
@@ -22,5 +29,6 @@ fun main() {
             }
         }
         registerUserRoutes()
+        registerChatRoutes()
     }.start(wait = true)
 }

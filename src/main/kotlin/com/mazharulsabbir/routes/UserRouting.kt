@@ -22,7 +22,7 @@ fun Route.userRouting() {
             )
             val customer =
                 userStorage.find { it.id == id } ?: return@get call.respondText(
-                    "No customer with id $id",
+                    "No user with id $id",
                     status = HttpStatusCode.NotFound
                 )
             call.respond(customer)
@@ -36,7 +36,7 @@ fun Route.userRouting() {
         delete("{id}") {
             val id = call.parameters["id"] ?: return@delete call.respond(HttpStatusCode.BadRequest)
             if (userStorage.removeIf { it.id == id }) {
-                call.respondText("Customer removed correctly", status = HttpStatusCode.Accepted)
+                call.respondText("User removed correctly", status = HttpStatusCode.Accepted)
             } else {
                 call.respondText("Not Found", status = HttpStatusCode.NotFound)
             }
